@@ -1,7 +1,11 @@
 import _ from 'lodash';
 window._ = _;
 
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
+window.document.addEventListener('DOMContentLoaded', function () {
+    const toastElList = [].slice.call(window.document.querySelectorAll('.toast'));
+    toastElList.map((v) => new bootstrap.Toast(v).show());
+})
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
