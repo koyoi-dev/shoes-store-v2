@@ -6,7 +6,8 @@
     <h1 class="h2">Size: {{ $size->us }}</h1>
     <hr>
 
-    <div class="mb-3">
+    <div class="mb-3 hstack gap-2">
+        <a href="{{ route('admin.sizes.index') }}" class="btn btn-sm btn-secondary">Back</a>
         <x-buttons.action-buttons
             :show="route('admin.sizes.show', $size->id)"
         />

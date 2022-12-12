@@ -6,7 +6,8 @@
     <h1 class="h2">Style: {{ $style->name }}</h1>
     <hr>
 
-    <div class="mb-3">
+    <div class="mb-3 hstack gap-2">
+        <a href="{{ route('admin.styles.index') }}" class="btn btn-sm btn-secondary">Back</a>
         <x-buttons.action-buttons
             :show="route('admin.styles.show', $style->id)"
             :edit="route('admin.styles.edit', $style->id)"
