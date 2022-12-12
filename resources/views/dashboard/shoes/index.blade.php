@@ -36,8 +36,6 @@
                 <th scope="col">Category</th>
                 <th scope="col">Style</th>
                 <th scope="col">Total Stock</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Last Updated At</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -55,8 +53,6 @@
                     <td>{{ $shoe->style->name }} <a href="{{ route('admin.styles.show', $shoe->style->id) }}"><span
                                 class="feather-sm" data-feather="link-2"></span></a></td>
                     <td>{{ $shoe->sizes->sum('stock.quantity') }}</td>
-                    <td>{{ $shoe->created_at }}</td>
-                    <td>{{ $shoe->updated_at }}</td>
                     <td>
                         <x-buttons.action-buttons
                             :show="route('admin.shoes.show', $shoe->id)"
