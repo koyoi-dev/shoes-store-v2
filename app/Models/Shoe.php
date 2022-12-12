@@ -10,7 +10,6 @@ class Shoe extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $with = ['sizes', 'brand', 'images', 'category', 'style'];
 
     public function sizes()
     {
