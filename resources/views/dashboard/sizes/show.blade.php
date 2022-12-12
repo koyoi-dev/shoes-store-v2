@@ -9,8 +9,6 @@
     <div class="mb-3">
         <x-buttons.action-buttons
             :show="route('admin.sizes.show', $size->id)"
-            :edit="route('admin.sizes.edit', $size->id)"
-            :delete="route('admin.sizes.destroy', $size->id)"
         />
     </div>
 
