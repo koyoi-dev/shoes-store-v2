@@ -69,17 +69,17 @@ class ShoeController extends Controller
             ->flatten(1);
 
         $shoe = Shoe::query()->create($shoeData); // create a shoe
+
+        $stocks = [];
         foreach ($stockCollections as $stock) {
             $sizeId = $stock['size_id'];
             $quantity = $stock['quantity'];
 
-            Stock::query()
-                ->create([
-                    'shoe_id' => $shoe->id,
-                    'size_id' => $sizeId,
-                    'quantity' => $quantity
-                ]);
+            if($quantity > 0) {
+                $stocks[$sizeId] = ['quantity' => $quantity];
+            }
         }
+        $shoe->sizes()->sync($stocks);
 
         // Saving images
         $this->saveImages($request, $shoe);
@@ -142,15 +142,17 @@ class ShoeController extends Controller
             ->flatten(1);
 
         $shoe->update($shoeData);
+        $stocks = [];
         foreach ($stockCollections as $stock) {
             $sizeId = $stock['size_id'];
             $quantity = $stock['quantity'];
 
-            Stock::query()
-                ->where('size_id', $sizeId)
-                ->whereBelongsTo($shoe)
-                ->update(['quantity' => $quantity]);
+            if($quantity > 0) {
+                $stocks[$sizeId] = ['quantity' => $quantity];
+            }
         }
+        $shoe->sizes()->sync($stocks);
+
         if($request->images) {
             Storage::delete($shoe->images()->pluck('path')->all()); // delete all images
             $shoe->images()->delete();

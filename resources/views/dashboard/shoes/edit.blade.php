@@ -85,11 +85,18 @@
         <div class="mb-3">
             <label for="" class="form-label">Sizes and Stocks</label>
             <div class="row">
-                @foreach($shoe->sizes->chunk(7) as $chunk)
+                @foreach($sizes->chunk(7) as $chunk)
                     <div class="col-sm-3">
                         <table class="table table-responsive table-bordered">
                             <tbody>
                             @foreach($chunk as $size)
+                                @php
+                                    $quantity = 0;
+                                    $shoeQuery = $shoe->sizes->where('id', $size->id);
+                                    if($shoeQuery->count()) {
+                                        $quantity = $shoeQuery->first()->stock->quantity;
+                                    }
+                                @endphp
                                 <tr>
                                     <th scope="row">{{ floatval($size->us) }}</th>
                                     <td>
@@ -98,7 +105,7 @@
                                                value="{{ $size->id }}">
                                         <input type="number" class="form-control form-control-sm"
                                                name="stocks[{{ $loop->parent->index }}][{{ $loop->index }}][quantity]"
-                                               value="{{ old('stocks.' . $loop->parent->index . '.' . $loop->index . '.quantity', $size->stock->quantity) }}">
+                                               value="{{ old('stocks.' . $loop->parent->index . '.' . $loop->index . '.quantity', $quantity) }}">
                                     </td>
                                 </tr>
                             @endforeach
