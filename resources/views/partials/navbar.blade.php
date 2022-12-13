@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-black">
     <div class="container-fluid">
         {{-- Nav Heading --}}
-        <a class="navbar-brand mb-0 h1" href="{{ route('home') }}">Shoe Store</a>
+        <a class="navbar-brand mb-0 h1" href="{{ route('home') }}">Shoes Store</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
             <span class="navbar-toggler-icon"></span>
         </button>

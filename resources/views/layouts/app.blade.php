@@ -20,15 +20,17 @@
     <!-- Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 
-    <!-- Tiny MCE -->
-    <x-heads.tinymce-config />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
 <div id="app">
     <div class="d-flex flex-column min-wh-100">
         @include('partials.navbar')
-        <main id="main" class="flex-shrink-0 pt-4">
-            @yield('content')
+        <main id="main" class="flex-shrink-0">
+            <div class="container-fluid">
+                @yield('content')
+            </div>
         </main>
     </div>
 </div>

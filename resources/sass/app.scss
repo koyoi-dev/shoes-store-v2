@@ -1,4 +1,8 @@
 // Bootstrap
+$font-family-sans-serif: 'Roboto', sans-serif;
+
+$enable-rounded: false;
+
 @import 'bootstrap/scss/bootstrap';
 
 @import "feathers";
