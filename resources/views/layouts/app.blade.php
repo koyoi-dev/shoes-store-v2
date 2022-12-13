@@ -25,7 +25,7 @@
 </head>
 <body>
 <div id="app">
-    <div class="d-flex flex-column min-wh-100">
+    <div class="d-flex flex-column min-vh-100">
         @include('partials.navbar')
         <main id="main" class="flex-shrink-0">
             <div class="container-fluid">
