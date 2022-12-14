@@ -54,4 +54,11 @@ class ShoeController extends Controller
             'sizes' => $sizes,
         ]);
     }
+
+    public function show(Shoe $shoe) {
+        $shoe->load('sizes');
+        return view('shoe', [
+            'shoe' => $shoe
+        ]);
+    }
 }

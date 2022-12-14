@@ -34,6 +34,7 @@ Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::get('/shoes', [ShoeController::class, 'index'])->name('shoes');
+Route::get('/shoes/{shoe}', [ShoeController::class, 'show'])->name('shoes.show');
 
 Route::group(['middleware' => 'admin', 'as' => 'admin.'], function() {
     Route::get('/dashboard', function () {

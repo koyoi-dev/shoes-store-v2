@@ -94,8 +94,7 @@
                             <small class="d-block fw-bold">{{ $shoe->name }}</small>
                             <small
                                 class="card-text d-block mt-2">Rp. {{ number_format($shoe->price, 0, ',', '.') }}</small>
-                            {{-- TODO: change below to a show route --}}
-                            <a href="#!" class="stretched-link"></a>
+                            <a href="{{ route('shoes.show', $shoe->id) }}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
