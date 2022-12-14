@@ -5,4 +5,9 @@ $enable-rounded: false;
 
 @import 'bootstrap/scss/bootstrap';
 
-@import "feathers";
+.product-card {
+    border: 1px solid transparent;
+    &:hover {
+        border: 1px solid $secondary;
+    }
+}

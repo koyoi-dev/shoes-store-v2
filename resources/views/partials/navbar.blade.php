@@ -7,8 +7,13 @@
         </button>
         {{-- Nav Content --}}
         <div class="collapse navbar-collapse" id="navContent">
-            <ul class="navbar-nav me-auto mb-4 mb-lg-0">
-
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('about') ? 'active border-bottom border-2 border-danger' : '' }}" href="{{ route('about') }}">{{ __('About Us') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::is('shoes') ? 'active border-bottom border-2 border-danger' : '' }}" href="{{ route('shoes') }}">{{ __('Shoes') }}</a>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 @auth
