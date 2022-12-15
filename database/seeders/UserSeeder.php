@@ -16,13 +16,22 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::query()
+        $admin = User::query()
             ->create([
                 'name' => 'Admin',
                 'email' => 'admin@admin.com',
                 'password' => Hash::make('password'),
                 'is_admin' => true
             ]);
-        User::factory(5)->create();
+        $admin->cart()->create();
+
+        $user1 = User::query()
+            ->create([
+                'name' => 'Koyoi',
+                'email' => 'member@member.com',
+                'password' => Hash::make('password'),
+            ]);
+
+        $user1->cart()->create();
     }
 }

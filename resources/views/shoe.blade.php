@@ -64,15 +64,22 @@
                     </div>
                     <hr>
                     <div class="card">
-                        <div class="card-body">
-                            {{-- TODO: Add To Cart Route--}}
-                            <form class="row" action="" method="POST">
+                        <div class="card-body position-relative">
+                            @auth
+                                @if(auth()->user()->cart->shoes()->where('id', $shoe->id)->exists())
+                                    <div class="overlay">
+                                        <a href="{{ route('cart') }}" class="btn btn-sm btn-danger">Show in cart</a>
+                                    </div>
+                                @endif
+                            @endauth
+                            <form class="row" action="{{ route('cart.add') }}" method="POST">
                                 @csrf
                                 <fieldset class="col-12 mb-3">
                                     <legend class="form-label fs-6">Size</legend>
                                     <div class="hstack gap-2">
                                         @foreach($shoe->sizes->sortBy('us') as $size)
                                             <div class="flex-shrink-0">
+                                                <input type="hidden" name="shoe_id" value="{{ $shoe->id }}">
                                                 <input type="radio" class="btn-check" value="{{ $size->id }}"
                                                        name="size"
                                                        id="size-{{ $size->id }}"
@@ -109,7 +116,7 @@
 
 @push('scripts')
     <script type="text/javascript">
-        const quantity = @json($shoe->sizes()->get()->mapWithKeys(function ($item) { return [$item->id => $item->stock->quantity];})->all());
+        const quantity = @json($shoe->getAllStocks());
 
         document.querySelectorAll('input[type=radio][name="size"]').forEach((radio) => {
             radio.addEventListener('change', (evt) => {

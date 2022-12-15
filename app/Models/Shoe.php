@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,14 @@ class Shoe extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getStocks($size_id) {
+        return $this->sizes()->where('size_id', $size_id)->first()->stock->quantity;
+    }
+
+    public function getAllStocks() {
+        return $this->sizes()->get()->mapWithKeys(function ($item) { return [$item->id => $item->stock->quantity];})->all();
+    }
 
     public function sizes()
     {
@@ -39,5 +48,11 @@ class Shoe extends Model
     public function images()
     {
         return $this->hasMany(Image::class);
+    }
+
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class, 'cart_shoe')
+            ->withPivot(['size_id', 'quantity']);
     }
 }

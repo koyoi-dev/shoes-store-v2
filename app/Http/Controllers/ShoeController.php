@@ -56,7 +56,7 @@ class ShoeController extends Controller
     }
 
     public function show(Shoe $shoe) {
-        $shoe->load('sizes');
+        $shoe->load('sizes', 'carts');
         return view('shoe', [
             'shoe' => $shoe
         ]);

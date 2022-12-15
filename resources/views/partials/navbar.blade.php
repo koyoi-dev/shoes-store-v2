@@ -19,14 +19,20 @@
             </ul>
             <div class="d-flex mt-3 mt-md-0 me-0 me-sm-2">
                 <form class="input-group input-group-sm" action="{{ route('shoes') }}" method="GET">
-                    <input type="search" class="form-control" placeholder="Nike Air Max" name="keyword" value="{{ request('keyword', '') }}">
+                    <input type="search" class="form-control" placeholder="Nike Air Max" name="keyword"
+                           value="{{ request('keyword', '') }}">
                     <button class="btn btn-danger" type="submit">
                         Search
                     </button>
                 </form>
             </div>
-            <ul class="navbar-nav mt-3 mt-md-0">
+            <ul class="navbar-nav mt-3 mt-md-0 gap-2">
                 @auth
+                    <li class="nav-item">
+                        <a class="btn btn-sm btn-outline-light fw-bold position-relative" type="button" href="{{ route('cart') }}">
+                            <i class="bi bi-cart me-1"></i> <span class="badge text-bg-danger">{{ auth()->user()->cart->items_count }}</span>
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button"
                                 data-bs-toggle="dropdown" role="button">

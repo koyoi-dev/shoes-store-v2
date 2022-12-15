@@ -33,6 +33,9 @@ class RegisterController extends Controller
         $data['password'] = Hash::make($data['password']);
 
         $user = User::query()->create($data);
+        $user->cart()->create([
+            'user_id' => $user->id
+        ]);
 
         Auth::guard()->login($user);
 

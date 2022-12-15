@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SizeController as AdminSizeController;
 use App\Http\Controllers\Admin\StyleController as AdminStyleController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShoeController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,15 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 
 Route::get('/shoes', [ShoeController::class, 'index'])->name('shoes');
 Route::get('/shoes/{shoe}', [ShoeController::class, 'show'])->name('shoes.show');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::post('/cart', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::patch('/cart/{shoe}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{shoe}', [CartController::class, 'destroy'])->name('cart.delete');
+
+});
 
 Route::group(['middleware' => 'admin', 'as' => 'admin.'], function() {
     Route::get('/dashboard', function () {
