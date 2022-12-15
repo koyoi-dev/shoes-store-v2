@@ -9,16 +9,27 @@
         <div class="collapse navbar-collapse" id="navContent">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('about') ? 'active border-bottom border-2 border-danger' : '' }}" href="{{ route('about') }}">{{ __('About Us') }}</a>
+                    <a class="nav-link {{ Route::is('about') ? 'active border-bottom border-2 border-danger' : '' }}"
+                       href="{{ route('about') }}">{{ __('About Us') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('shoes') ? 'active border-bottom border-2 border-danger' : '' }}" href="{{ route('shoes') }}">{{ __('Shoes') }}</a>
+                    <a class="nav-link {{ Route::is('shoes') ? 'active border-bottom border-2 border-danger' : '' }}"
+                       href="{{ route('shoes') }}">{{ __('Shoes') }}</a>
                 </li>
             </ul>
-            <ul class="navbar-nav">
+            <div class="d-flex mt-3 mt-md-0 me-0 me-sm-2">
+                <form class="input-group input-group-sm" action="{{ route('shoes') }}" method="GET">
+                    <input type="search" class="form-control" placeholder="Nike Air Max" name="keyword" value="{{ request('keyword', '') }}">
+                    <button class="btn btn-danger" type="submit">
+                        Search
+                    </button>
+                </form>
+            </div>
+            <ul class="navbar-nav mt-3 mt-md-0">
                 @auth
                     <li class="nav-item dropdown">
-                        <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" role="button">
+                        <button class="btn btn-sm btn-outline-light dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" role="button">
                             <strong>{{ auth()->user()->name }}</strong>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow">
@@ -44,7 +55,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="btn btn-outline-light" type="button" href="{{ route('login') }}">Login</a>
+                        <a class="btn btn-sm btn-outline-light" type="button" href="{{ route('login') }}">Login</a>
                     </li>
                 @endauth
             </ul>
