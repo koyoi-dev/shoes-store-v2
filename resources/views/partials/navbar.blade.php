@@ -29,8 +29,10 @@
             <ul class="navbar-nav mt-3 mt-md-0 gap-2">
                 @auth
                     <li class="nav-item">
-                        <a class="btn btn-sm btn-outline-light fw-bold position-relative" type="button" href="{{ route('cart') }}">
-                            <i class="bi bi-cart me-1"></i> <span class="badge text-bg-danger">{{ auth()->user()->cart->items_count }}</span>
+                        <a class="btn btn-sm btn-outline-light fw-bold position-relative" type="button"
+                           href="{{ route('cart') }}">
+                            <i class="bi bi-cart me-1"></i> <span
+                                class="badge text-bg-danger">{{ auth()->user()->cart->items_count }}</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -38,11 +40,11 @@
                                 data-bs-toggle="dropdown" role="button">
                             <strong>{{ auth()->user()->name }}</strong>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark text-small shadow">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
-                                    <span class="feather-sm" data-feather="settings"></span>
-                                    Profile
+                                    <i class="bi bi-file-earmark-text"></i>
+                                    Transactions
                                 </a>
                             </li>
                             <li>
@@ -51,9 +53,9 @@
                             <li>
                                 <form action="{{ route('logout') }}" method="post">
                                     @csrf
-                                    <button type="submit" class="dropdown-item d-flex gap-2 align-items-center">
-                                        <span class="feather-sm text-danger" data-feather="log-out"></span>
-                                        Sign out
+                                    <button type="submit" class="dropdown-item d-flex gap-2 align-items-center text-danger">
+                                        <i class="bi bi-box-arrow-right"></i>
+                                        Logout
                                     </button>
                                 </form>
                             </li>

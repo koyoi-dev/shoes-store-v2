@@ -58,15 +58,6 @@
                 </button>
                 <ul class="dropdown-menu text-small shadow">
                     <li>
-                        <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
-                            <span class="feather-sm" data-feather="settings"></span>
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
                             <button type="submit" class="dropdown-item d-flex gap-2 align-items-center">

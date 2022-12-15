@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="col-sm-5">
-                <div class="sticky-sm-top py-4">
+                <div class="sticky-sm-top py-4" style="z-index: 0;">
                     <div>
                         <h2 class="text-danger text-uppercase fs-6 fw-bold">{{ $shoe->brand->name }}</h2>
                         <h1 class="text-uppercase fs-5 fw-normal">{{ $shoe->name }}</h1>
