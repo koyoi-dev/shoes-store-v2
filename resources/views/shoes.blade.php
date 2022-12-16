@@ -5,7 +5,7 @@
 
         <header class="hstack justify-content-between align-items-center mt-3">
             <h1 class="fw-bold m-0 lh-1">Our Shoes</h1>
-            <button class="btn btn-sm btn-dark" type="button" data-bs-toggle="collapse"
+            <button class="btn btn-sm btn-black" type="button" data-bs-toggle="collapse"
                     data-bs-target="#filterCollapse"><i class="bi-filter"></i> Filters
             </button>
         </header>

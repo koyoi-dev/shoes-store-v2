@@ -101,7 +101,7 @@
                                 </div>
 
                                 <div class="col-12">
-                                    <button id="addToCart" class="btn btn-dark text-uppercase w-100" disabled>Add to
+                                    <button id="addToCart" class="btn btn-black text-uppercase w-100" disabled>Add to
                                         cart
                                     </button>
                                 </div>

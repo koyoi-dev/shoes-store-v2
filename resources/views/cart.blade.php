@@ -73,7 +73,7 @@
                                                                    name="quantity">
                                                             <label for="floatingInput">Quantity</label>
                                                         </div>
-                                                        <button class="w-100 mb-2 btn btn-dark" type="submit">Update
+                                                        <button class="w-100 mb-2 btn btn-black" type="submit">Update
                                                         </button>
                                                     </form>
                                                 </div>
@@ -161,7 +161,7 @@
                         </div>
 
                         <div class="d-grid">
-                            <button form="checkoutForm" type="submit" class="btn btn-dark">Proceed to checkout</button>
+                            <button form="checkoutForm" type="submit" class="btn btn-black">Proceed to checkout</button>
                         </div>
                     </div>
                 </div>
