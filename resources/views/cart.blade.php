@@ -30,7 +30,7 @@
                                 <div class="hstack gap-2 align-items-center">
                                     <div style="width: 100px; height: 100px">
                                         <img class="img-fluid"
-                                             src="{{ asset('/storage/' . $item->shoe->images->first()->path) }}"
+                                             src="{{ \Illuminate\Support\Facades\Storage::url($item->shoe->images->first()->path) }}"
                                              alt="{{ $item->shoe->name }}">
                                     </div>
                                     <div class="">

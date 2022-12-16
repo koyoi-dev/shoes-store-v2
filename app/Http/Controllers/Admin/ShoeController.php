@@ -174,10 +174,10 @@ class ShoeController extends Controller
 
     private function saveImages(Request $request, Shoe $shoe): void
     {
+        $folderPath = preg_replace('/\s+/', '_', time() . ' ' . $shoe->id);
         $imagesData = [];
         foreach ($request->images as $file) {
-            $fileName = preg_replace('/\s+/', '_', time() . ' ' . $file->getClientOriginalName()); // format: <unix_time>_<original_name>.<extension>
-            $path = Storage::putFileAs('shoes', $file, $fileName);
+            $path = Storage::putFile('shoes/' . $folderPath, $file);
             $imagesData[] = ['path' => $path];
         }
         $shoe->images()->createMany($imagesData);

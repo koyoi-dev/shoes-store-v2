@@ -86,7 +86,7 @@
             @foreach($shoes as $shoe)
                 <div class="col">
                     <div class="product-card card h-100" role="button">
-                        <img src="{{ asset('/storage/' . $shoe->images->first()->path) }}"
+                        <img src="{{ \Illuminate\Support\Facades\Storage::url($shoe->images->first()->path) }}"
                              class="card-img-top"
                              alt="...">
                         <div class="card-body">

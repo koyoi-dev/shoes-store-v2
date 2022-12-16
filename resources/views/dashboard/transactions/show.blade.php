@@ -48,7 +48,7 @@
                                     <div class="hstack gap-2 align-items-center">
                                         <div style="width: 100px; height: 100px">
                                             <img class="img-fluid"
-                                                 src="{{ asset('/storage/' . $order->image) }}"
+                                                 src="{{ \Illuminate\Support\Facades\Storage::url($order->image) }}"
                                                  alt="{{ $order->name }}">
                                         </div>
                                         <div class="">

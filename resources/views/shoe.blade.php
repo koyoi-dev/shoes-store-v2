@@ -16,7 +16,7 @@
                     <div class="carousel-inner">
                         @foreach($shoe->images as $key => $image)
                             <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <img class="d-block w-100 img-fluid" src="{{ asset('/storage/' . $image->path) }}"
+                                <img class="d-block w-100 img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($image->path) }}"
                                      alt="{{ $shoe->name }}">
                             </div>
                         @endforeach
@@ -33,13 +33,13 @@
                     </button>
                 </div>
                 <div class="d-none d-sm-block">
-                    <img class="img-fluid" src="{{ asset('/storage/' . $shoe->images()->first()->path) }}"
+                    <img class="img-fluid" src="{{ \Illuminate\Support\Facades\Storage::url($shoe->images()->first()->path) }}"
                          alt="{{ $shoe->name }}">
 
                     <div class="row">
                         @foreach($shoe->images->skip(1) as $shoeImage)
                             <div class="col-sm-6 mb-4">
-                                <img class="img-thumbnail" src="{{ asset('/storage/' . $shoeImage->path) }}"
+                                <img class="img-thumbnail" src="{{ \Illuminate\Support\Facades\Storage::url($shoeImage->path) }}"
                                      alt="{{ $shoeImage->name }}">
                             </div>
                         @endforeach
