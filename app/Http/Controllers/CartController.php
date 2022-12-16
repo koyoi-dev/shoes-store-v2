@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Shoe;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -72,14 +73,34 @@ class CartController extends Controller
 
     public function checkout(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'name' => ['required'],
             'address' => ['required'],
             'phone' => ['required'],
             'code' => ['required', 'confirmed']
         ]);
 
-//        TODO: save to transaction
-        dd($request->all());
+        $transactionData = $request->except('code', 'code_confirmation');
+
+        $items = $this->cart->items()->get();
+        $user = $request->user();
+
+        $orders = [];
+        foreach ($items as $item) {
+            $orders[] = [
+                'image' => $item->shoe->images()->first()->path,
+                'name' => $item->shoe->name,
+                'price' => $item->shoe->price,
+                'quantity' => $item->quantity,
+                'size' => $item->size->us,
+                'subtotal' => $item->shoe->price * $item->quantity,
+            ];
+        }
+        $transaction = $user->transactions()->create($transactionData);
+        $transaction->orders()->createMany($orders);
+
+        $this->cart->items()->delete();
+
+        return redirect()->route('transactions');
     }
 }

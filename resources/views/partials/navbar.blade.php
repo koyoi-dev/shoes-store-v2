@@ -42,7 +42,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
+                                <a class="dropdown-item d-flex gap-2 align-items-center" href="{{ route('transactions') }}">
                                     <i class="bi bi-file-earmark-text"></i>
                                     Transactions
                                 </a>

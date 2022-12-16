@@ -6,11 +6,14 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\ShoeController as AdminShoeController;
 use App\Http\Controllers\Admin\SizeController as AdminSizeController;
 use App\Http\Controllers\Admin\StyleController as AdminStyleController;
+use App\Http\Controllers\Admin\TransactionController as AdminTransactionController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShoeController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,6 +47,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::patch('/cart/{shoe}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{shoe}', [CartController::class, 'destroy'])->name('cart.delete');
 
+    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
 });
 
 Route::group(['middleware' => 'admin', 'as' => 'admin.'], function() {
@@ -57,4 +61,6 @@ Route::group(['middleware' => 'admin', 'as' => 'admin.'], function() {
     Route::get('dashboard/sizes', [AdminSizeController::class, 'index'])->name('sizes.index');
     Route::get('dashboard/sizes/{size}', [AdminSizeController::class, 'show'])->name('sizes.show');
     Route::resource('dashboard/shoes', AdminShoeController::class);
+    Route::resource('dashboard/transactions', AdminTransactionController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('dashboard/users', AdminUserController::class)->except(['create', 'store']);
 });
