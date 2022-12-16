@@ -17,14 +17,14 @@
             </div>
         </div>
     </header>
-    <!-- About section one-->
     <section class="py-5 bg-light" id="scroll-target">
         <div class="container px-5 my-5">
             <div class="row gx-5 align-items-center">
-                <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" width="600" height="400"
-                                           src="{{ asset('/img/about/who-we-are.jpg') }}" alt="..."/></div>
+                <div class="col-lg-6"><img class="img-fluid rounded shadow-sm mb-5 mb-lg-0"
+                                           src="{{ asset('/img/about/who-we-are.png') }}" alt="..."/></div>
                 <div class="col-lg-6">
-                    <h2 class="fw-bolder">Who we are</h2>
+                    <h2 class="text-danger text-uppercase fs-6 fw-bold">Our Story</h2>
+                    <h3 class="h2 fw-bolder">Who we are</h3>
                     <p class="lead fw-normal text-muted mb-0">We are a group of students that are required to build a
                         final project for our Web Programming class. We decide on an idea to build an ecommerce website
                         that focus on shoes as products for our
@@ -33,7 +33,7 @@
             </div>
         </div>
     </section>
-    <!-- Team members section-->
+
     <section class="py-5">
         <div class="container px-5 my-5">
             <div class="text-center">
