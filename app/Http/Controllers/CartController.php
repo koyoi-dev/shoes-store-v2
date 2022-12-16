@@ -85,8 +85,12 @@ class CartController extends Controller
         $items = $this->cart->items()->get();
         $user = $request->user();
 
+
+        $transaction = $user->transactions()->create($transactionData);
+
         $orders = [];
         foreach ($items as $item) {
+            // map orders;
             $orders[] = [
                 'image' => $item->shoe->images()->first()->path,
                 'name' => $item->shoe->name,
@@ -95,10 +99,17 @@ class CartController extends Controller
                 'size' => $item->size->us,
                 'subtotal' => $item->shoe->price * $item->quantity,
             ];
+
+            // update quantity
+            $oldQuantity = $item->shoe->sizes()->where('size_id', $item->size->id)->first()->stock->quantity;
+            $newQuantity = $oldQuantity - $item->quantity;
+            $item->shoe->sizes()->updateExistingPivot($item->size->id, [
+                'quantity' => $newQuantity
+            ]);
         }
-        $transaction = $user->transactions()->create($transactionData);
         $transaction->orders()->createMany($orders);
 
+        // Delete all cart items
         $this->cart->items()->delete();
 
         return redirect()->route('transactions');
