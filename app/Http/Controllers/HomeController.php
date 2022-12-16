@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Shoe;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $shoes = Shoe::query()->latest()->take(5)->get();
+        return view('home', [
+            'shoes' => $shoes
+        ]);
     }
 }

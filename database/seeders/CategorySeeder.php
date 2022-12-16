@@ -11,7 +11,6 @@ class CategorySeeder extends Seeder
     protected static $categories = [
         'Mens',
         'Womens',
-        'Kids'
     ];
     /**
      * Run the database seeds.
