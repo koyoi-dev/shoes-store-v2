@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class SizeSeeder extends Seeder
 {
-    protected static $sizes = [
+    static $sizes = [
         [
             'us' => 6,
             'uk' => 5.5,

@@ -3,17 +3,21 @@
 namespace Database\Seeders;
 
 use App\Models\Brand;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BrandSeeder extends Seeder
 {
-    protected static $brands = [
+    static $brands = [
         'Nike',
         'Adidas',
-        'New Balance',
+        'Under Armour',
+        'Asics',
+        'Lacoste',
+        'Converse',
+        'Crocs',
         'Puma',
     ];
+
 
     /**
      * Run the database seeds.

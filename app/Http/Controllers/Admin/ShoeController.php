@@ -177,7 +177,8 @@ class ShoeController extends Controller
         $folderPath = preg_replace('/\s+/', '_', time() . ' ' . $shoe->id);
         $imagesData = [];
         foreach ($request->images as $file) {
-            $path = Storage::putFile('shoes/' . $folderPath, $file);
+            $fileName = preg_replace('/\s+/', '_', time() . ' ' . $file->getClientOriginalName());
+            $path = Storage::putFileAs('shoes/' . $folderPath, $file, $fileName);
             $imagesData[] = ['path' => $path];
         }
         $shoe->images()->createMany($imagesData);

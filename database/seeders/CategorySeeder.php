@@ -8,10 +8,11 @@ use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
-    protected static $categories = [
-        'Mens',
-        'Womens',
+    static $categories = [
+        'Men',
+        'Women',
     ];
+
     /**
      * Run the database seeds.
      *

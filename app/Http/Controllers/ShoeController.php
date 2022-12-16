@@ -28,6 +28,13 @@ class ShoeController extends Controller
             }
         }
 
+        if($request->has('style')) {
+            $style = Style::query()->find($request->input('style'));
+            if($style) {
+                $builder = $builder->whereBelongsTo($style);
+            }
+        }
+
         if($request->has('size')) {
             $sizeId = $request->input('size');
             $builder = $builder->whereHas('sizes', function ($q) use($sizeId) {
