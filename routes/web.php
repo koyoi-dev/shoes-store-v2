@@ -51,9 +51,7 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 Route::group(['middleware' => 'admin', 'as' => 'admin.'], function() {
-    Route::get('/dashboard', function () {
-        return view('dashboard.index');
-    })->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('dashboard/brands', AdminBrandController::class);
     Route::resource('dashboard/categories', AdminCategoryController::class);
