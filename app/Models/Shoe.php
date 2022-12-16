@@ -12,7 +12,7 @@ class Shoe extends Model
 
     protected $guarded = [];
 
-    public function getStocks($size_id) {
+    public function getStock($size_id) {
         return $this->sizes()->where('size_id', $size_id)->first()->stock->quantity;
     }
 
@@ -48,11 +48,5 @@ class Shoe extends Model
     public function images()
     {
         return $this->hasMany(Image::class);
-    }
-
-    public function carts()
-    {
-        return $this->belongsToMany(Cart::class, 'cart_shoe')
-            ->withPivot(['size_id', 'quantity']);
     }
 }

@@ -22,20 +22,20 @@ class Cart extends Model
 
     public function items()
     {
-        return $this->hasMany(CartShoe::class, 'cart_id');
+        return $this->hasMany(CartStock::class, 'cart_id');
     }
 
-    public function shoes()
+    public function stocks()
     {
-        return $this->belongsToMany(Shoe::class, 'cart_shoe');
+        return $this->belongsToMany(Stock::class, 'cart_stock')
+            ->withPivot(['quantity']);
     }
-
     public function getTotalPrice()
     {
         return $this->items()
             ->get()
             ->sum(function ($item) {
-                return $item->shoe->price * $item->quantity;
+                return $item->stock->shoe->price * $item->quantity;
             });
     }
 }

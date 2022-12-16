@@ -23,27 +23,27 @@
                     </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                    @foreach($cart->items()->get() as $item)
+                    @foreach($cart->stocks()->get() as $stock)
                         @php($randomId = Str::random(5))
                         <tr class="align-middle small text-nowrap">
                             <td>
                                 <div class="hstack gap-2 align-items-center">
                                     <div style="width: 100px; height: 100px">
                                         <img class="img-fluid"
-                                             src="{{ \Illuminate\Support\Facades\Storage::url($item->shoe->images->first()->path) }}"
-                                             alt="{{ $item->shoe->name }}">
+                                             src="{{ \Illuminate\Support\Facades\Storage::url($stock->shoe->images->first()->path) }}"
+                                             alt="{{ $stock->shoe->name }}">
                                     </div>
                                     <div class="">
-                                        <div class="d-block text-uppercase fw-bold">{{ $item->shoe->name }}</div>
-                                        <div class="badge text-bg-secondary">US {{ $item->size->us }}</div>
+                                        <a href="{{ route('shoes.show', $stock->shoe->id) }}" class="d-block text-black text-uppercase fw-bold">{{ $stock->shoe->name }}</a>
+                                        <div class="badge text-bg-secondary">US {{ $stock->size->us }}</div>
                                         <div class="mt-1 small">In
-                                            Stock: {{ $item->shoe->getStocks($item->size->id) }}</div>
+                                            Stock: {{ $stock->quantity }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td>Rp. {{ number_format($item->shoe->price, 0, ',', '.') }}</td>
-                            <td>{{ $item->quantity }}</td>
-                            <td>Rp. {{ number_format($item->quantity * $item->shoe->price, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($stock->shoe->price, 0, ',', '.') }}</td>
+                            <td>{{ $stock->pivot->quantity }}</td>
+                            <td>Rp. {{ number_format($stock->pivot->quantity * $stock->shoe->price, 0, ',', '.') }}</td>
                             <td>
                                 <div class="hstack gap-1">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal"
@@ -55,21 +55,21 @@
                                                 <div
                                                     class="modal-header p-5 pb-4 hstack align-items-center border-bottom-0">
                                                     <h5 class="fw-bold mb-0 fs-5">Edit <span
-                                                            class="text-uppercase text-wrap">{{ $item->shoe->name }}</span>
+                                                            class="text-uppercase text-wrap">{{ $stock->shoe->name }}</span>
                                                     </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
 
                                                 <div class="modal-body p-5 pt-0">
-                                                    <form action="{{ route('cart.update', $item->shoe->id) }}"
+                                                    <form action="{{ route('cart.update', $stock->id) }}"
                                                           method="POST">
                                                         @csrf
                                                         @method('PATCH')
                                                         <div class="form-floating mb-3">
                                                             <input type="number" class="form-control" id="floatingInput"
-                                                                   value="{{ $item->quantity }}" min="1"
-                                                                   max="{{ $item->shoe->getStocks($item->size->id) }}"
+                                                                   value="{{ $stock->pivot->quantity }}" min="1"
+                                                                   max="{{ $stock->quantity }}"
                                                                    name="quantity">
                                                             <label for="floatingInput">Quantity</label>
                                                         </div>
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
 
-                                    <form action="{{ route('cart.delete', $item->shoe->id) }}"
+                                    <form action="{{ route('cart.delete', $stock->id) }}"
                                           method="POST">
                                         @csrf
                                         @method('DELETE')

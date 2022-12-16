@@ -68,48 +68,46 @@
                     <hr>
                     <div class="card">
                         <div class="card-body position-relative">
-                            @auth
-                                @if(auth()->user()->cart->shoes()->where('id', $shoe->id)->exists())
-                                    <div class="overlay">
-                                        <a href="{{ route('cart') }}" class="btn btn-sm btn-danger">Show in cart</a>
+                            @if(auth()->check() && auth()->user()->cart->stocks()->where('shoe_id', $shoe->id)->exists())
+                                <p class="small">This product is already in your cart.</p>
+                                <a href="{{ route('cart') }}" class="btn btn-danger">Show in cart</a>
+                            @else
+                                <form class="row" action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <fieldset class="col-12 mb-3">
+                                        <legend class="form-label fs-6">Size</legend>
+                                        <div class="hstack gap-2">
+                                            @foreach($shoe->sizes->sortBy('us') as $size)
+                                                <div class="flex-shrink-0">
+                                                    <input type="hidden" name="shoe_id" value="{{ $shoe->id }}">
+                                                    <input type="radio" class="btn-check" value="{{ $size->id }}"
+                                                           name="size_id"
+                                                           id="size-{{ $size->id }}"
+                                                           @disabled($size->stock->quantity == 0)
+                                                           @checked(old('size_id') == $size->id) autocomplete="off">
+                                                    <label class="btn btn-sm btn-outline-dark fw-bold"
+                                                           for="size-{{ $size->id }}">US {{ floatval($size->us) }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </fieldset>
+
+                                    <p class="col-sm-12 fw-bold mb-3" id="inStock"></p>
+
+                                    <div class="col-8 mb-3">
+                                        <label for="quantity" class="form-label fw-bold">Quantity</label>
+                                        <input type="number" name="quantity" id="quantity" min="1" class="form-control"
+                                               value="{{ old('quantity', 1) }}">
                                     </div>
-                                @endif
-                            @endauth
-                            <form class="row" action="{{ route('cart.add') }}" method="POST">
-                                @csrf
-                                <fieldset class="col-12 mb-3">
-                                    <legend class="form-label fs-6">Size</legend>
-                                    <div class="hstack gap-2">
-                                        @foreach($shoe->sizes->sortBy('us') as $size)
-                                            <div class="flex-shrink-0">
-                                                <input type="hidden" name="shoe_id" value="{{ $shoe->id }}">
-                                                <input type="radio" class="btn-check" value="{{ $size->id }}"
-                                                       name="size"
-                                                       id="size-{{ $size->id }}"
-                                                       @disabled($size->stock->quantity == 0)
-                                                       @checked(old('size') == $size->id) autocomplete="off">
-                                                <label class="btn btn-sm btn-outline-dark fw-bold"
-                                                       for="size-{{ $size->id }}">US {{ floatval($size->us) }}</label>
-                                            </div>
-                                        @endforeach
+
+                                    <div class="col-12">
+                                        <button id="addToCart" class="btn btn-black text-uppercase w-100" disabled>
+                                            <i class="bi bi-cart-fill me-1"></i>
+                                            Add to cart
+                                        </button>
                                     </div>
-                                </fieldset>
-
-                                <p class="col-sm-12 fw-bold mb-3" id="inStock"></p>
-
-                                <div class="col-8 mb-3">
-                                    <label for="quantity" class="form-label fw-bold">Quantity</label>
-                                    <input type="number" name="quantity" id="quantity" min="1" class="form-control"
-                                           value="{{ old('quantity', 1) }}">
-                                </div>
-
-                                <div class="col-12">
-                                    <button id="addToCart" class="btn btn-black text-uppercase w-100" disabled>
-                                        <i class="bi bi-cart-fill me-1"></i>
-                                        Add to cart
-                                    </button>
-                                </div>
-                            </form>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -122,7 +120,7 @@
     <script type="text/javascript">
         const quantity = @json($shoe->getAllStocks());
 
-        document.querySelectorAll('input[type=radio][name="size"]').forEach((radio) => {
+        document.querySelectorAll('input[type=radio][name="size_id"]').forEach((radio) => {
             radio.addEventListener('change', (evt) => {
                 const value = evt.target.value;
                 const qtyInput = document.getElementById('quantity');

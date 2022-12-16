@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cart_shoe', function (Blueprint $table) {
+        Schema::create('cart_stock', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('cart_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('shoe_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('size_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('stock_id')->constrained()->cascadeOnDelete();
             $table->integer('quantity');
             $table->timestamps();
         });
@@ -29,11 +29,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('cart_shoe', function (Blueprint $table) {
+        Schema::table('cart_stock', function (Blueprint $table) {
             $table->dropConstrainedForeignId('cart_id');
-            $table->dropConstrainedForeignId('shoe_id');
-            $table->dropConstrainedForeignId('size_id');
+            $table->dropConstrainedForeignId('stock_id');
         });
-        Schema::dropIfExists('cart_shoe');
+        Schema::dropIfExists('cart_stock');
     }
 };

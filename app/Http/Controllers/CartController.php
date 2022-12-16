@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartStock;
 use App\Models\Shoe;
+use App\Models\Stock;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,45 +32,50 @@ class CartController extends Controller
         ]);
     }
 
-    public function add(Request $request, Shoe $shoe)
+    public function add(Request $request)
     {
         $data = $request->validate([
             'shoe_id' => ['required', 'numeric'],
-            'size' => ['required', 'numeric'],
+            'size_id' => ['required', 'numeric'],
             'quantity' => ['required', 'numeric', 'min:0']
         ]);
 
-        $this->cart->items()->create([
-            'size_id' => $data['size'],
-            'shoe_id' => $data['shoe_id'],
-            'quantity' => $data['quantity'],
+        $currentStock = Stock::query()
+                ->where('shoe_id', $data['shoe_id'])
+                ->where('size_id', $data['size_id'])
+                ->first();
+
+        $this->cart->stocks()->toggle([
+            $currentStock->id => ['quantity' => $data['quantity']]
         ]);
 
-        return redirect()->route('cart');
+        return redirect()
+            ->route('shoes.show', $data['shoe_id'])
+            ->with('message', 'Added to cart.');
     }
 
-    public function update(Request $request, Shoe $shoe)
+    public function update(Request $request, Stock $stock)
     {
         $data = $request->validate([
             'quantity' => ['required', 'numeric', 'min:0']
         ]);
 
         // https://laravel.com/docs/9.x/eloquent-relationships#updating-a-record-on-the-intermediate-table
-        $this->cart->shoes()->updateExistingPivot($shoe->id, [
+        $this->cart->stocks()->updateExistingPivot($stock->id, [
             'quantity' => $data['quantity']
         ]);
 
         return redirect()
             ->route('cart')
-            ->with('message', 'Updated quantity for ' . $shoe->name);
+            ->with('message', 'Updated quantity for ' . $stock->shoe->name);
     }
 
-    public function destroy(Shoe $shoe)
+    public function destroy(Stock $stock)
     {
-        $this->cart->items()->where('shoe_id', $shoe->id)->delete();
+        $this->cart->items()->where('stock_id', $stock->id)->delete();
         return redirect()
             ->route('cart')
-            ->with('message', 'Successfully remove ' . $shoe->name);
+            ->with('message', 'Successfully remove ' . $stock->shoe->name);
     }
 
     public function checkout(Request $request)
@@ -82,28 +89,28 @@ class CartController extends Controller
 
         $transactionData = $request->except('code', 'code_confirmation');
 
-        $items = $this->cart->items()->get();
+        $stocks = $this->cart->stocks()->get();
         $user = $request->user();
 
 
         $transaction = $user->transactions()->create($transactionData);
 
         $orders = [];
-        foreach ($items as $item) {
+        foreach ($stocks as $stock) {
             // map orders;
             $orders[] = [
-                'image' => $item->shoe->images()->first()->path,
-                'name' => $item->shoe->name,
-                'price' => $item->shoe->price,
-                'quantity' => $item->quantity,
-                'size' => $item->size->us,
-                'subtotal' => $item->shoe->price * $item->quantity,
+                'image' => $stock->shoe->images()->first()->path,
+                'name' => $stock->shoe->name,
+                'price' => $stock->shoe->price,
+                'quantity' => $stock->pivot->quantity,
+                'size' => $stock->size->us,
+                'subtotal' => $stock->shoe->price * $stock->pivot->quantity,
             ];
 
             // update quantity
-            $oldQuantity = $item->shoe->sizes()->where('size_id', $item->size->id)->first()->stock->quantity;
-            $newQuantity = $oldQuantity - $item->quantity;
-            $item->shoe->sizes()->updateExistingPivot($item->size->id, [
+            $oldQuantity = $stock->shoe->sizes()->where('size_id', $stock->size->id)->first()->stock->quantity;
+            $newQuantity = $oldQuantity - $stock->pivot->quantity;
+            $stock->shoe->sizes()->updateExistingPivot($stock->size->id, [
                 'quantity' => $newQuantity
             ]);
         }
