@@ -11,30 +11,31 @@
                             bought for everyone. We inspire youth and empower youth culture, by fueling a shared passion
                             for self-expression and creating unrivaled experiences at the heart of the global sneaker
                             community.</p>
-                        <a class="btn btn-danger btn-lg" href="#scroll-target">Read our story</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <section class="py-5 bg-light" id="scroll-target">
-        <div class="container px-5 my-5">
-            <div class="row gx-5 align-items-center">
-                <div class="col-lg-6"><img class="img-fluid rounded shadow-sm mb-5 mb-lg-0"
-                                           src="{{ asset('/img/about/who-we-are.png') }}" alt="..."/></div>
-                <div class="col-lg-6">
-                    <h2 class="text-danger text-uppercase fs-6 fw-bold">Our Story</h2>
-                    <h3 class="h2 fw-bolder">Who we are</h3>
-                    <p class="lead fw-normal text-muted mb-0">We are a group of students that are required to build a
-                        final project for our Web Programming class. We decide on an idea to build an ecommerce website
-                        that focus on shoes as products for our
-                        final project.</p>
+
+    @foreach($sections as $key => $section)
+        @php($alternate = $key % 2 ==0)
+        <section class="py-5 {{ $alternate ? 'bg-light' : '' }}">
+            <div class="container px-5 my-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6 {{ $alternate ? '' : 'order-first order-lg-last' }}"><img
+                            class="img-fluid shadow-sm mb-5 mb-lg-0"
+                            src="{{ asset($section['image']) }}" alt="..."/></div>
+                    <div class="col-lg-6">
+                        <h2 class="text-danger text-uppercase fs-6 fw-bold">{{ $section['label'] }}</h2>
+                        <h3 class="h2 fw-bolder">{{ $section['title'] }}</h3>
+                        <p class="lead fw-normal text-muted mb-0">{{ $section['content'] }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endforeach
 
-    <section class="py-5">
+    <section class="py-5 {{ $sections->count() % 2 == 0 ? 'bg-light' : ''}}">
         <div class="container px-5 my-5">
             <div class="text-center">
                 <h2 class="fw-bolder">Our team</h2>
