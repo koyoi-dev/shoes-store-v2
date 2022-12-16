@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('carts', function (Blueprint $table) {
+        Schema::table('cart_shoe', function (Blueprint $table) {
             $table->dropConstrainedForeignId('cart_id');
             $table->dropConstrainedForeignId('shoe_id');
             $table->dropConstrainedForeignId('size_id');
